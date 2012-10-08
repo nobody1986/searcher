@@ -1,0 +1,13 @@
+// $Id$
+// vim:ft=javascript
+
+// If your extension references something external, use ARG_WITH
+// ARG_WITH("searcher", "for searcher support", "no");
+
+// Otherwise, use ARG_ENABLE
+// ARG_ENABLE("searcher", "enable searcher support", "no");
+
+if (PHP_SEARCHER != "no") {
+	EXTENSION("searcher", "searcher.c");
+}
+
