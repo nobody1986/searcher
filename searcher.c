@@ -345,17 +345,17 @@ int bestResult(unsigned char *s, int pos, int len, node *head, node *n, int * be
 
 int saveToFile(void *c, int nn, unsigned char *fileName) {
     size_t length = 256 * sizeof (unsigned int) +nn * sizeof (node);
-    unsigned long lengthCompressed = compressBound(length) ;
-    unsigned long *s = malloc(lengthCompressed + sizeof(unsigned long));
-    unsigned long lengthCompressedR = lengthCompressed + sizeof(unsigned long);
-    memset(s,0,lengthCompressed + sizeof(unsigned long));
-    if(compress((Bytef *)(s + 1) ,&lengthCompressedR,(Bytef *)c,length) != Z_OK){
-        #if DEBUG
-        printf("%d\n",length);
-        printf("%d\n",lengthCompressed);
-        printf("%d\n",lengthCompressed + sizeof(unsigned long));
-        printf("%d\n",compress((Bytef *)s ,&lengthCompressedR,"xx",2));
-        #endif
+    unsigned long lengthCompressed = compressBound(length);
+    unsigned long *s = malloc(lengthCompressed + sizeof (unsigned long));
+    unsigned long lengthCompressedR = lengthCompressed + sizeof (unsigned long);
+    memset(s, 0, lengthCompressed + sizeof (unsigned long));
+    if (compress((Bytef *) (s + 1), &lengthCompressedR, (Bytef *) c, length) != Z_OK) {
+#if DEBUG
+        printf("%d\n", length);
+        printf("%d\n", lengthCompressed);
+        printf("%d\n", lengthCompressed + sizeof (unsigned long));
+        printf("%d\n", compress((Bytef *) s, &lengthCompressedR, "xx", 2));
+#endif
         return 0;
     }
     *s = length;
@@ -366,7 +366,7 @@ int saveToFile(void *c, int nn, unsigned char *fileName) {
     printf("nn :[%d] \n", nn);
 #endif
     FILE *fp = fopen(fileName, "wb");
-    fwrite(s, lengthCompressedR+ sizeof(unsigned long), 1, fp);
+    fwrite(s, lengthCompressedR + sizeof (unsigned long), 1, fp);
     fclose(fp);
     free(s);
 }
@@ -384,22 +384,23 @@ long releaseFromFile(unsigned char *fileName, void **c) {
     fread(s, len, 1, fp);
     beforeUncompress = *s;
     *c = malloc(beforeUncompress);
-    memset(*c, 0,beforeUncompress);
+    memset(*c, 0, beforeUncompress);
     afterUncompress = beforeUncompress;
     int ret = 0;
-    if((ret = uncompress((Bytef *)*c,&afterUncompress,(Bytef *)(s + 1),len - sizeof(unsigned long)) )!= Z_OK){
+    if ((ret = uncompress((Bytef *) * c, &afterUncompress, (Bytef *) (s + 1), len - sizeof (unsigned long))) != Z_OK) {
         printf("ret :[%d] \n", ret);
         return 0;
     }
-    #if DEBUG
+#if DEBUG
     printf("len :[%d] \n", len);
     printf("before Uncompressed compute :[%d] \n", beforeUncompress);
     printf("after    Uncompressed true :[%d] \n", afterUncompress);
-    #endif
+#endif
     free(s);
     return len;
 }
 
+#if DEBUG
 /*
  * 
  */
@@ -416,10 +417,8 @@ int main(int argc, char** argv) {
     saveToFile(c, nn, compiled);
     c = NULL;
     releaseFromFile(compiled, &c);
-#if DEBUG
     showList(c);
-#endif
     search(c, s, strlen(s), 2);
     return (EXIT_SUCCESS);
 }
-
+#endif
