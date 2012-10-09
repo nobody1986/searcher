@@ -39,8 +39,12 @@ static int le_searcher;
  *
  * Every user visible function must have an entry in searcher_functions[].
  */
-const zend_function_entry searcher_functions[] = {
-	PHP_FE(confirm_searcher_compiled,	NULL)		/* For testing, remove later. */
+const zend_function_entry searcher_methods[] = {
+	//PHP_FE(confirm_searcher_compiled,	NULL)		/* For testing, remove later. */
+	PHP_ME(Searcher,__construct,NULL,ZEND_ACC_PUBLIC|ZEND_ACC_CTOR),
+	PHP_ME(Searcher,__destruct,NULL,ZEND_ACC_PUBLIC|ZEND_ACC_DTOR),
+	PHP_ME(Searcher,saveToFile,saveToFile_args,ZEND_ACC_PUBLIC),
+	PHP_ME(Searcher,search,search_args,ZEND_ACC_PUBLIC),
 	PHP_FE_END	/* Must be the last line in searcher_functions[] */
 };
 /* }}} */
@@ -77,7 +81,7 @@ PHP_INI_BEGIN()
     STD_PHP_INI_ENTRY("searcher.global_string", "foobar", PHP_INI_ALL, OnUpdateString, global_string, zend_searcher_globals, searcher_globals)
 PHP_INI_END()
 */
-/* }}} */
+/* }}} */ 
 
 /* {{{ php_searcher_init_globals
  */
@@ -97,9 +101,13 @@ PHP_MINIT_FUNCTION(searcher)
 	/* If you have INI entries, uncomment these lines 
 	REGISTER_INI_ENTRIES();
 	*/
+	zend_class_entry searcher;  
+    INIT_CLASS_ENTRY(searcher,"Searcher",searcher_methods);//初始化  
+    searcher_ce=zend_register_internal_class_ex(&searcher,NULL,NULL TSRMLS_DC);  
+    searcher_ce->ce_flags=ZEND_ACC_IMPLICIT_PUBLIC;  
 	return SUCCESS;
 }
-/* }}} */
+/* }}} */ 
 
 /* {{{ PHP_MSHUTDOWN_FUNCTION
  */
@@ -152,20 +160,42 @@ PHP_MINFO_FUNCTION(searcher)
 /* Every user-visible function in PHP should document itself in the source */
 /* {{{ proto string confirm_searcher_compiled(string arg)
    Return a string to confirm that the module is compiled in */
-PHP_FUNCTION(confirm_searcher_compiled)
+PHP_METHOD(Searcher,__construct)
 {
-	char *arg = NULL;
-	int arg_len, len;
-	char *strg;
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &arg, &arg_len) == FAILURE) {
-		return;
+	char *rulefile = NULL,*imgfile = NULL;
+	int rulefile_len,imgfile_len;
+	zval *rulefile_zval,*imgfile_zval,*value, *self;
+	void* c = NULL;
+	int nn = 0;
+	long ret = 0;
+ 
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "!zz", &rulefile_zval, &imgfile_zval) == FAILURE) {
+		WRONG_PARAM_COUNT;
 	}
+ 	
+ 	if(Z_TYPE_P(rulefile_zval) != IS_NULL){
+ 		c = parseRuleFile(Z_STRVAL_P(rulefile_zval),&nn);
+ 	}else{
+ 		if(Z_TYPE_P(imgfile_zval) != IS_NULL){
+ 			ret = releaseFromFile(Z_STRVAL_P(imgfile_zval),&c);
+ 		}else{
+ 			WRONG_PARAM_COUNT;
+ 		}
+ 	}
 
-	len = spprintf(&strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "searcher", arg);
-	RETURN_STRINGL(strg, len, 0);
+ 	
+
+	self = getThis();
+ 
+	MAKE_STD_ZVAL(value);
+	ZVAL_STRING(value, arg, arg_len, 0);
+ 
+	SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
+	zend_update_property(Z_OBJCE_P(self), self, ZEND_STRL("_name"), value TSRMLS_CC);
+ 
+	RETURN_TRUE;
 }
-/* }}} */
+/* }}} */ 
 /* The previous line is meant for vim and emacs, so it can correctly fold and 
    unfold functions in source code. See the corresponding marks just before 
    function definition, where the functions purpose is also documented. Please 

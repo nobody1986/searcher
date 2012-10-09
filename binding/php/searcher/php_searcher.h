@@ -42,7 +42,7 @@ PHP_RINIT_FUNCTION(searcher);
 PHP_RSHUTDOWN_FUNCTION(searcher);
 PHP_MINFO_FUNCTION(searcher);
 
-PHP_FUNCTION(confirm_searcher_compiled);	/* For testing, remove later. */
+
 
 /* 
   	Declare any global variables you may need between the BEGIN
@@ -82,7 +82,11 @@ ZEND_END_MODULE_GLOBALS(searcher)
  * vim<600: noet sw=4 ts=4
  */
 
+zend_class_entry *searcher_ce;
+
 PHP_METHOD(Searcher,__construct);
 PHP_METHOD(Searcher,__destruct);
 PHP_METHOD(Searcher,saveToFile);
 PHP_METHOD(Searcher,search);
+
+
