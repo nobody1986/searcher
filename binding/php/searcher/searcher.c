@@ -22,6 +22,7 @@
 #include "config.h"
 #endif
 
+#include<searcher.h>
 #include "php.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"

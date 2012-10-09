@@ -81,3 +81,8 @@ ZEND_END_MODULE_GLOBALS(searcher)
  * vim600: noet sw=4 ts=4 fdm=marker
  * vim<600: noet sw=4 ts=4
  */
+
+PHP_METHOD(Searcher,__construct);
+PHP_METHOD(Searcher,__destruct);
+PHP_METHOD(Searcher,saveToFile);
+PHP_METHOD(Searcher,search);

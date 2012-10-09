@@ -13,9 +13,9 @@ dnl [  --with-searcher             Include searcher support])
 
 dnl Otherwise use enable:
 
-dnl PHP_ARG_ENABLE(searcher, whether to enable searcher support,
+ PHP_ARG_ENABLE(searcher, whether to enable searcher support,
 dnl Make sure that the comment is aligned:
-dnl [  --enable-searcher           Enable searcher support])
+ [  --enable-searcher           Enable searcher support])
 
 if test "$PHP_SEARCHER" != "no"; then
   dnl Write more examples of tests here...
