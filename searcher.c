@@ -201,16 +201,19 @@ int parseRuleLine(void *c, unsigned char* line, int len, int *np) {
     }
 }
 
-int search(void *c, unsigned char *s, int len, int level) {
+int search(void *c, unsigned char *s, int len, int level,callback_t cbk) {
     int i = 0;
     int pos = 0;
     int ret = 0;
     for (i = 0; i < len; ++i) {
         ret = searchOne(c, s, i, len, &pos);
         if (ret > 0) {
-            //#if DEBUG
+            #if DEBUG
             printf("pos :%d - %d -level: %d\n", i, pos, ret);
-            //#endif
+            #endif
+            if(cbk){
+                cbk(s,i,pos,ret);
+            }
             if (ret > level) {
                 i = pos;
             }

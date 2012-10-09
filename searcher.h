@@ -23,11 +23,13 @@ typedef struct {
 
 #define DEBUG 0
 
+typedef void (*callback_t)(unsigned char* s,int start,int end,int level);
+
 int init(void **c, long len) ;
 int release(void *c) ;
 void* parseRuleFile(unsigned char* fileName, int *nn) ;
 int parseRuleLine(void *c, unsigned char* line, int len, int *np);
-int search(void *c, unsigned char *s, int len, int level);
+int search(void *c, unsigned char *s, int len, int level,callback_t cbk);
 int searchOne(void *c, unsigned char *s, int pos, int len, int *m);
 int bestResult(unsigned char *s, int pos, int len, node *head, node *n, int * best_pos, int *best_level);
 int saveToFile(void *c, int nn, unsigned char *fileName) ;

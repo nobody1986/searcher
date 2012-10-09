@@ -66,6 +66,11 @@ class content(ctypes.Structure):
     ]
     
 
+callback_t = ctypes.CFUNCTYPE(ctypes.c_void_p,
+                                 ctypes.c_char_p,
+                                 ctypes.c_int,
+                                 ctypes.c_int,
+                                 ctypes.c_int)
 
 HAS_NO_ORDER = 1
 HAS_ORDER_BUT_NEEDNT_CAT = 2
@@ -79,23 +84,29 @@ class Searcher(object):
     def __init__(self,**kwargs):
         dll_extension = os.name == 'nt' and 'dll' or 'so'
         #self.dll = ctypes.CDLL('_searcher.%s' % dll_extension)
-        self.dll = ctypes.cdll.LoadLibrary('./_searcher.%s' % dll_extension)
+        self.dll = ctypes.cdll.LoadLibrary('../../_searcher.%s' % dll_extension)
         self.nn = ctypes.c_int(0)
 
         self.dll.parseRuleFile.restype = ctypes.c_void_p
         self.dll.releaseFromFile.restype = ctypes.c_long
         self.dll.saveToFile.restype = ctypes.c_int
         self.dll.search.restype = ctypes.c_int
+		
+        
 
         if(kwargs.has_key('rulefile')):
             self.c = self.dll.parseRuleFile(ctypes.c_char_p(kwargs['rulefile']),ctypes.pointer(self.nn))
+            self.c = ctypes.c_void_p(self.c)
         else:
             if(kwargs.has_key('imgfile')):
+            	self.c = ctypes.c_void_p();
                 self.ret = self.dll.releaseFromFile(ctypes.c_char_p(kwargs['imgfile']),ctypes.pointer(self.c))
             else:
                 pass
             pass
-        self.c = ctypes.c_void_p(self.c)
+        
+        
+
 
 
     def __del__(self):
@@ -105,6 +116,11 @@ class Searcher(object):
     def saveToFile(self,filename):
         return self.dll.saveToFile(self.c,self.nn,ctypes.c_char_p(filename))
     
-    def search(self,str,level):
-        return self.dll.search(self.c,ctypes.c_char_p(str),len(str),ctypes.c_int(level))
+    def search(self,str,level,callback = None):
+        if callback:
+            callback = callback_t(callback)
+            callback.restype = ctypes.c_void_p
+        else:
+            callback = ctypes.c_void_p(0)
+        return self.dll.search(self.c,ctypes.c_char_p(str),len(str),ctypes.c_int(level),callback)
 
