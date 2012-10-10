@@ -45,15 +45,14 @@ ZEND_ARG_INFO(0, rulefile)
 ZEND_ARG_INFO(0, imgfile)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO(saveToFile_args, 1)    //声明arg_construct为含有x,y的2个参数
-ZEND_ARG_INFO(0, filename)
+ZEND_BEGIN_ARG_INFO(saveToFile_args, 2)    //声明arg_construct为含有x,y的2个参数
+ZEND_ARG_INFO(0, x)
+ZEND_ARG_INFO(0, y)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO(search_args, 4)    //声明arg_construct为含有x,y的2个参数
-ZEND_ARG_INFO(0, s)
-ZEND_ARG_INFO(0, start)
-ZEND_ARG_INFO(0, end)
-ZEND_ARG_INFO(0, level)
+ZEND_BEGIN_ARG_INFO(search_args, 2)    //声明arg_construct为含有x,y的2个参数
+ZEND_ARG_INFO(0, x)
+ZEND_ARG_INFO(0, y)
 ZEND_END_ARG_INFO()
 
 const zend_function_entry searcher_methods[] = {
