@@ -213,6 +213,9 @@ int search(void *c, unsigned char *s, int len, int level,callback_t cbk) {
             #endif
             if(cbk){
                 cbk(s,i,pos,ret);
+                #if DEBUG
+                printf("after callback :%c\n", s[i]);
+                #endif
             }
             if (ret > level) {
                 i = pos;

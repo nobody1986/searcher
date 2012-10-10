@@ -164,7 +164,7 @@ PHP_METHOD(Searcher,__construct)
 {
 	char *rulefile = NULL,*imgfile = NULL;
 	int rulefile_len,imgfile_len;
-	zval *rulefile_zval,*imgfile_zval,*value, *self;
+	zval *rulefile_zval,*imgfile_zval,*cvalue,*nnvalue, *self;
 	void* c = NULL;
 	int nn = 0;
 	long ret = 0;
@@ -187,11 +187,17 @@ PHP_METHOD(Searcher,__construct)
 
 	self = getThis();
  
-	MAKE_STD_ZVAL(value);
-	ZVAL_STRING(value, arg, arg_len, 0);
- 
-	SEPARATE_ZVAL_TO_MAKE_IS_REF(&value);
-	zend_update_property(Z_OBJCE_P(self), self, ZEND_STRL("_name"), value TSRMLS_CC);
+	MAKE_STD_ZVAL(cvalue);
+	ZVAL_LONG(cvalue, (int)c);
+
+	SEPARATE_ZVAL_TO_MAKE_IS_REF(&cvalue);
+	zend_update_property(Z_OBJCE_P(self), self, ZEND_STRL("_c"), cvalue TSRMLS_CC);
+
+	MAKE_STD_ZVAL(nnvalue);
+	ZVAL_LONG(nnvalue, nn);
+
+	SEPARATE_ZVAL_TO_MAKE_IS_REF(&nnvalue);
+	zend_update_property(Z_OBJCE_P(self), self, ZEND_STRL("_nn"), nnvalue TSRMLS_CC);
  
 	RETURN_TRUE;
 }
@@ -202,6 +208,65 @@ PHP_METHOD(Searcher,__construct)
    follow this convention for the convenience of others editing your code.
 */
 
+PHP_METHOD(Searcher,__destruct)
+{
+	
+ 
+	RETURN_TRUE;
+}
+
+PHP_METHOD(Searcher,search)
+{
+	char *str = NULL;
+	int str_len,level;
+	zval *cvalue, *self,*callback;
+	void* c = NULL;
+	long ret = 0;
+ 
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|f", &str,&str_len, &level,&callback) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+ 	
+
+ 	
+
+	self = getThis();
+ 
+	cvalue = zend_read_property(Z_OBJCE_P(self), self, ZEND_STRL("_c"), 0 TSRMLS_CC);
+	c = (void*)Z_LVAL_P(cvalue);
+
+ 	ret = search(c,str,str_len,level,NULL);
+
+	RETURN_LONG(ret);
+}
+
+PHP_METHOD(Searcher,saveToFile)
+{
+	char *imgfile = NULL;
+	int imgfile_len;
+	zval *cvalue,*nnvalue, *self;
+	void* c = NULL;
+	int nn = 0;
+	long ret = 0;
+ 
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &imgfile, &imgfile_len) == FAILURE) {
+		WRONG_PARAM_COUNT;
+	}
+ 	
+	self = getThis();
+	nnvalue = zend_read_property(Z_OBJCE_P(self), self, ZEND_STRL("_nn"), 0 TSRMLS_CC);
+	nn = Z_LVAL_P(nnvalue);
+ 	if(nn == 0){
+ 		WRONG_PARAM_COUNT;
+ 	}
+	
+	cvalue = zend_read_property(Z_OBJCE_P(self), self, ZEND_STRL("_c"), 0 TSRMLS_CC);
+	c = (void*)Z_LVAL_P(cvalue);
+
+	ret = saveToFile(c,nn,imgfile);
+
+	RETURN_LONG(ret);
+}
 
 /*
  * Local variables:
