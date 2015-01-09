@@ -84,7 +84,7 @@ class Searcher(object):
     def __init__(self,**kwargs):
         dll_extension = os.name == 'nt' and 'dll' or 'so'
         #self.dll = ctypes.CDLL('_searcher.%s' % dll_extension)
-        self.dll = ctypes.cdll.LoadLibrary('../../_searcher.%s' % dll_extension)
+        self.dll = ctypes.cdll.LoadLibrary('searcher.%s' % dll_extension)
         self.nn = ctypes.c_int(0)
 
         self.dll.parseRuleFile.restype = ctypes.c_void_p
@@ -94,13 +94,13 @@ class Searcher(object):
 		
         
 
-        if(kwargs.has_key('rulefile')):
-            self.c = self.dll.parseRuleFile(ctypes.c_char_p(kwargs['rulefile']),ctypes.pointer(self.nn))
+        if('rulefile' in kwargs):
+            self.c = self.dll.parseRuleFile(ctypes.c_char_p(kwargs['rulefile'].encode("utf-8")),ctypes.pointer(self.nn))
             self.c = ctypes.c_void_p(self.c)
         else:
-            if(kwargs.has_key('imgfile')):
-            	self.c = ctypes.c_void_p();
-                self.ret = self.dll.releaseFromFile(ctypes.c_char_p(kwargs['imgfile']),ctypes.pointer(self.c))
+            if('imgfile' in kwargs):
+                self.c = ctypes.c_void_p();
+                self.ret = self.dll.releaseFromFile(ctypes.c_char_p(kwargs['imgfile'].encode("utf-8")),ctypes.pointer(self.c))
             else:
                 pass
             pass
@@ -114,7 +114,7 @@ class Searcher(object):
         #self.dll.mg_stop(self.ctx)
     
     def saveToFile(self,filename):
-        return self.dll.saveToFile(self.c,self.nn,ctypes.c_char_p(filename))
+        return self.dll.saveToFile(self.c,self.nn,ctypes.c_char_p(filename.encode("utf-8")))
     
     def search(self,str,level,callback = None):
         if callback:
@@ -122,5 +122,5 @@ class Searcher(object):
             callback.restype = ctypes.c_void_p
         else:
             callback = ctypes.c_void_p(0)
+        str = str.encode("utf-8")
         return self.dll.search(self.c,ctypes.c_char_p(str),len(str),ctypes.c_int(level),callback)
-
