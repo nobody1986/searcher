@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
-#include "zlib.h"
+#include <zlib.h>
 #include "searcher.h"
 
 
@@ -424,7 +424,7 @@ int main(int argc, char** argv) {
     c = NULL;
     releaseFromFile(compiled, &c);
     showList(c);
-    search(c, s, strlen(s), 2);
+    search(c, s, strlen(s), 2,NULL);
     return (EXIT_SUCCESS);
 }
 #endif

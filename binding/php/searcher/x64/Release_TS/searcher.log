@@ -1,0 +1,29 @@
+﻿生成启动时间为 2015/1/9 16:55:01。
+     1>项目“F:\php-5.6.4\php56dev\vc11\x64\php-5.6.4\ext\searcher\searcher.vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>ClCompile:
+         D:\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /I..\.. /I..\..\main /I..\..\Zend /I..\..\..\bindlib_w32 /I..\..\TSRM /Zi /nologo /W3 /WX- /O2 /D ZEND_DEBUG=0 /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D SEARCHER_EXPORTS /D COMPILE_DL_SEARCHER /D ZTS=1 /D ZEND_WIN32 /D PHP_WIN32 /D HAVE_SEARCHER=1 /D _VC80_UPGRADE=0x0600 /D _WINDLL /D _MBCS /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release_TS\\" /Fd".\Release_TS\vc110.pdb" /FR"x64\Release_TS\\" /Gd /TC /errorReport:prompt searcher.c
+         searcher.c
+     1>searcher.c : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\php-5.6.4\php56dev\vc11\x64\php-5.6.4\zend\zend_execute.h(247): warning C4267: “函数”: 从“size_t”转换到“int”，可能丢失数据
+     1>searcher.c(177): warning C4101: “rulefile_len”: 未引用的局部变量
+     1>searcher.c(177): warning C4101: “imgfile_len”: 未引用的局部变量
+     1>searcher.c(240): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+     1>searcher.c(236): warning C4101: “callback_cache”: 未引用的局部变量
+     1>searcher.c(232): warning C4101: “retval_ptr”: 未引用的局部变量
+     1>searcher.c(232): warning C4101: “self”: 未引用的局部变量
+     1>searcher.c(234): warning C4101: “str_len”: 未引用的局部变量
+     1>searcher.c(232): warning C4101: “cvalue”: 未引用的局部变量
+     1>searcher.c(260): warning C4101: “arg3”: 未引用的局部变量
+     1>searcher.c(260): warning C4101: “arg2”: 未引用的局部变量
+     1>searcher.c(260): warning C4101: “arg1”: 未引用的局部变量
+     1>searcher.c(260): warning C4101: “arg4”: 未引用的局部变量
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(1137,5): warning MSB8012: TargetPath(F:\php-5.6.4\php56dev\vc11\x64\php-5.6.4\ext\searcher\x64\Release_TS\searcher.dll) does not match the Linker's OutputFile property value (F:\php-5.6.4\php56dev\vc11\x64\php-5.6.4\Release_TS\php_searcher.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(1139,5): warning MSB8012: TargetName(searcher) does not match the Linker's OutputFile property value (php_searcher). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         D:\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\Release_TS/php_searcher.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\..\Release_TS /LIBPATH:..\..\Release_TS_Inline odbc32.lib odbccp32.lib php5ts.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"F:\php-5.6.4\php56dev\vc11\x64\php-5.6.4\ext\searcher\x64\Release_TS\searcher.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Release_TS\php_searcher.lib" /MACHINE:X64 /DLL .\Release_TS\searcher.obj
+     1>LINK : fatal error LNK1181: 无法打开输入文件“php5ts.lib”
+     1>已完成生成项目“F:\php-5.6.4\php56dev\vc11\x64\php-5.6.4\ext\searcher\searcher.vcxproj”(Rebuild 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:00.48

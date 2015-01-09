@@ -2,7 +2,7 @@
 $br = (php_sapi_name() == "cli")? "":"<br>";
 
 if(!extension_loaded('searcher')) {
-	dl('searcher.' . PHP_SHLIB_SUFFIX);
+	dl('php_searcher.' . PHP_SHLIB_SUFFIX);
 }
 $module = 'searcher';
 $functions = get_extension_funcs($module);

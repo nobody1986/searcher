@@ -22,10 +22,11 @@
 #include "config.h"
 #endif
 
-#include<searcher.h>
+
 #include "php.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"
+#include "searcher/searcher.h"
 #include "php_searcher.h"
 
 /* If you declare any globals in php_searcher.h uncomment this:

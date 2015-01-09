@@ -6,4 +6,4 @@ searcher: searcher.c searcher.h
 
 .PHONY :clean
 clean:
-	rm -f *.o compiled.cd.gz searcher
+	rm -f *.o *.dll *.so searcher.exe compiled.cd.gz searcher *.a

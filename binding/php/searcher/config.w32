@@ -7,7 +7,11 @@
 // Otherwise, use ARG_ENABLE
 // ARG_ENABLE("searcher", "enable searcher support", "no");
 
+ARG_ENABLE("searcher", "enable searcher support", "no");
+
 if (PHP_SEARCHER != "no") {
-	EXTENSION("searcher", "searcher.c");
+	EXTENSION("searcher", "searcher.c",PHP_SEARCHER_SHARED,"");
+	ADD_SOURCES(configure_module_dirname + "/searcher", "searcher.c", "searcher");
+	PHP_INSTALL_HEADERS("ext/searcher/", "searcher/searcher.h");
 }
 

@@ -21,7 +21,7 @@ typedef struct {
 #define HAS_ORDER_BUT_NEEDNT_CAT 2
 #define HAS_ORDER 3
 
-#define DEBUG 0
+//#define DEBUG 0
 
 typedef void (*callback_t)(unsigned char* s,int start,int end,int level);
 

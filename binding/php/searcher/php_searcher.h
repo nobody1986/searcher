@@ -47,12 +47,12 @@ PHP_MINFO_FUNCTION(searcher);
 /* 
   	Declare any global variables you may need between the BEGIN
 	and END macros here:     
-
-ZEND_BEGIN_MODULE_GLOBALS(searcher)
-	long  global_value;
-	char *global_string;
-ZEND_END_MODULE_GLOBALS(searcher)
 */
+ZEND_BEGIN_MODULE_GLOBALS(searcher)
+	zend_fcall_info callback;
+    zend_fcall_info_cache callback_cache;
+ZEND_END_MODULE_GLOBALS(searcher)
+
 
 /* In every utility function you add that needs to use variables 
    in php_searcher_globals, call TSRMLS_FETCH(); after declaring other 
